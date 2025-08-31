@@ -1,29 +1,49 @@
-# hret-home
+# Vue 项目自动部署到服务器（Caddy）
 
-This template should help get you started developing with Vue 3 in Vite.
+本项目使用 **GitHub Actions + pnpm** 自动化构建并部署到指定服务器，通过 **Caddy** 提供静态文件服务。
 
-## Recommended IDE Setup
+---
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+## 📦 部署流程概述
 
-## Customize configuration
+1. **代码推送到 main 分支**（或手动触发）
+2. **GitHub Actions** 自动执行：
+   - 拉取代码
+   - 安装依赖（pnpm）
+   - 构建项目（生成 dist/）
+   - 通过 SSH（账号+密码）将 dist 上传到服务器指定目录
+3. Caddy 自动提供最新静态文件
 
-See [Vite Configuration Reference](https://vite.dev/config/).
+---
 
-## Project Setup
+## 🔧 环境要求
 
-```sh
-pnpm install
-```
+### 服务器
+- 已安装 **Caddy**，且配置 **登录用户** 指向 **部署目录** 例如：/opt/project/vue-home/dist
+- 部署用户对 **部署目录** 有写权限
+- 已安装 `rsync`（推荐），否则会走 `scp` 兜底
+- 可通过 SSH 访问（非 22 端口需在 Secrets 中配置）
 
-### Compile and Hot-Reload for Development
+### 本地/CI
+- Node.js 版本：**22.12.0**
+- pnpm：**9.x**
+- 仓库根目录存在 `pnpm-lock.yaml`
 
-```sh
-pnpm dev
-```
+---
 
-### Compile and Minify for Production
+## 🔑 配置 GitHub Secrets
 
-```sh
-pnpm build
-```
+在 **Settings → Secrets and variables → Actions** 中添加以下内容（推荐使用 Repository Secrets进行配置）：
+
+| Secret 名称             | 说明 |
+|--------------------------|------|
+| `DEPLOY_SERVER_HOST`     | 服务器域名或 IP |
+| `DEPLOY_SERVER_PORT`     | SSH 端口（默认 22，可留空） |
+| `DEPLOY_SERVER_USER`     | SSH 用户名 |
+| `DEPLOY_SERVER_PASSWORD` | SSH 密码 |
+| `DEPLOY_SERVER_PATH`     | 部署目录（本项目为 `/opt/project/vue-home/dist`） |
+
+> ⚠️ 如果使用 Environment Secrets，需要在 workflow 的 job 下加：
+> ```yaml
+> environment: deploy
+> ```
