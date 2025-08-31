@@ -1,0 +1,74 @@
+name: 项目服务部署
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # 安装 pnpm
+      - name: 安装pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 9
+          run_install: false
+
+      # Node.js 22.12.0 + pnpm 缓存
+      - name: 设置Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22.12.0'
+          cache: 'pnpm'
+
+      - name: 安装依赖
+        run: pnpm install --frozen-lockfile
+
+      - name: 构建项目
+        run: pnpm run build
+
+      - name: 安装 ssh/rsync
+        run: |
+          set -euo pipefail
+          sudo apt-get update -y
+          sudo apt-get install -y --no-install-recommends rsync sshpass openssh-client
+          which rsync
+          rsync --version
+
+      - name: 将服务器添加到 known_hosts
+        env:
+          HOST: ${{ secrets.DEPLOY_SERVER_HOST }}
+          PORT: ${{ secrets.DEPLOY_SERVER_PORT }}
+        run: |
+          mkdir -p ~/.ssh
+          ssh-keyscan -p "$PORT" -H "$HOST" >> ~/.ssh/known_hosts
+
+      # 覆盖静态文件目录
+      - name: 上传构建文件至服务器部署目录
+        env:
+          HOST: ${{ secrets.DEPLOY_SERVER_HOST }}
+          PORT: ${{ secrets.DEPLOY_SERVER_PORT }}
+          USER: ${{ secrets.DEPLOY_SERVER_USER }}
+          PASS: ${{ secrets.DEPLOY_SERVER_PASSWORD }}
+          DEPLOY_PATH: ${{ secrets.DEPLOY_SERVER_PATH }} # /opt/project/vue-home/dist
+        run: |
+          set -euo pipefail
+          sshpass -p "$PASS" ssh -p "$PORT" "$USER@$HOST" "mkdir -p '$DEPLOY_PATH'"
+          sshpass -p "$PASS" rsync -avz --delete -e "ssh -p $PORT" \
+            dist/ "$USER@$HOST:$DEPLOY_PATH/"
+
+      - name: 重启 Caddy 服务
+        if: ${{ always() && false }}
+        env:
+          HOST: ${{ secrets.DEPLOY_SERVER_HOST }}
+          PORT: ${{ secrets.DEPLOY_SERVER_PORT }}
+          USER: ${{ secrets.DEPLOY_SERVER_USER }}
+          PASS: ${{ secrets.DEPLOY_SERVER_PASSWORD }}
+        run: |
+          sshpass -p "$PASS" ssh -p "$PORT" "$USER@$HOST" "sudo caddy reload"
