@@ -1,4 +1,4 @@
-name: Deploy Vue app to server (password SSH + custom port)
+name: 项目服务部署
 
 on:
   push:
@@ -13,17 +13,25 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      # 安装 pnpm
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 9
+          run_install: false
+
+      # Node.js 22.12.0 + pnpm 缓存
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '22.12.0'
-          cache: 'npm'
+          cache: 'pnpm'
 
       - name: Install deps
-        run: npm ci
+        run: pnpm install --frozen-lockfile
 
       - name: Build
-        run: npm run build
+        run: pnpm run build
 
       - name: Install ssh clients
         run: |
@@ -38,24 +46,19 @@ jobs:
           mkdir -p ~/.ssh
           ssh-keyscan -p "$PORT" -H "$HOST" >> ~/.ssh/known_hosts
 
-      - name: Upload & switch symlink
+      # 覆盖静态文件目录
+      - name: Upload build to server dist
         env:
           HOST: ${{ secrets.DEPLOY_SERVER_HOST }}
           PORT: ${{ secrets.DEPLOY_SERVER_PORT }}
           USER: ${{ secrets.DEPLOY_SERVER_USER }}
           PASS: ${{ secrets.DEPLOY_SERVER_PASSWORD }}
-          DEPLOY_PATH: ${{ secrets.DEPLOY_SERVER_PATH }}
-          REL_PATH: releases/${{ github.sha }}
+          DEPLOY_PATH: ${{ secrets.DEPLOY_SERVER_PATH }} # /opt/project/vue-home/dist
         run: |
           set -euo pipefail
-          sshpass -p "$PASS" ssh -p "$PORT" "$USER@$HOST" "mkdir -p '$DEPLOY_PATH/releases' '$DEPLOY_PATH/shared'"
-
+          sshpass -p "$PASS" ssh -p "$PORT" "$USER@$HOST" "mkdir -p '$DEPLOY_PATH'"
           sshpass -p "$PASS" rsync -avz --delete -e "ssh -p $PORT" \
-            dist/ "$USER@$HOST:$DEPLOY_PATH/$REL_PATH/"
-
-          sshpass -p "$PASS" ssh -p "$PORT" "$USER@$HOST" "\
-            ln -sfn '$DEPLOY_PATH/$REL_PATH' '$DEPLOY_PATH/current' && \
-            echo 'Switched current -> $REL_PATH'"
+            dist/ "$USER@$HOST:$DEPLOY_PATH/"
 
       - name: (Optional) Reload Caddy
         if: ${{ always() && false }}
