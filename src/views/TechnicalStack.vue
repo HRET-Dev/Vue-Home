@@ -73,7 +73,7 @@ const techStackList = [
 <template>
     <section class="mx-auto max-w-6xl px-4 py-6">
         <div style="text-align: center; margin-bottom: 2%;">
-            <h1 class="text-xl font-semibold mb-4">技术栈</h1>
+            <h1 class="text-3xl font-bold mb-4">技术栈</h1>
             <h3>持续学习新技术，保持技术栈的现代化和多样性</h3>
         </div>
 

@@ -9,7 +9,7 @@ const ga = env.VITE_GA;
 </script>
 
 <template>
-  <div class="app">
+  <div class="min-h-screen flex flex-col">
     <HomeView />
 
     <footer class="footer footer-center p-3">
@@ -38,12 +38,6 @@ const ga = env.VITE_GA;
 
 
 <style scoped>
-.app {
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-}
-
 footer {
   margin-top: auto;
   margin-bottom: 0;
