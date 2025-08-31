@@ -1,0 +1,44 @@
+name: Deploy Vue App
+
+on:
+  push:
+    branches:
+      - main  # 监听 main 分支的推送事件
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+      # Checkout 仓库代码
+      - name: Checkout code
+        uses: actions/checkout@v3
+        
+      # 安装 Node.js 和依赖
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '22.12.0'  # 设置你需要的 Node.js 版本
+
+      - name: Install dependencies
+        run: npm install
+
+      # 构建 Vue 项目
+      - name: Build Vue app
+        run: npm run build
+
+      # 设置SSH部署环境
+      - name: Set up SSH
+        uses: webfactory/ssh-agent@v0.5.3
+        with:
+          ssh-private-key: ${{ secrets.DEPLOY_SSH_PRIVATE_KEY }}
+          
+      # 上传构建文件到服务器
+      - name: Deploy to server
+        run: |
+          scp -r dist/* ${{ secrets.DEPLOY_SERVER_USER }}@${{ secrets.DEPLOY_SERVER_HOST }}:${{ secrets.DEPLOY_SERVER_PATH }}
+
+      # 在服务器上重启 Caddy 服务
+      - name: Restart Caddy
+        run: |
+          ssh ${{ secrets.DEPLOY_SERVER_USER }}@${{ secrets.DEPLOY_SERVER_HOST }} "sudo systemctl restart caddy"
