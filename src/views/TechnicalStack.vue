@@ -1,13 +1,13 @@
 <script setup>
 /**
  * name：技术栈名称
- * 
+ *
  * level：技术栈等级
- * 
+ *
  * levelValue：技术栈等级描述
- * 
+ *
  * percent：技术栈掌握程度
- * 
+ *
  * icon：技术栈图标
  */
 const techStackList = [
@@ -65,7 +65,7 @@ const techStackList = [
         level: 2,
         levelValue: '中级',
         percent: '66',
-        icon: 'https://img.icons8.com/fluency/48/linux-terminal.png',
+        icon: 'https://img.icons8.com/skeuomorphism/64/console.png',
     },
 ];
 </script>
