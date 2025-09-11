@@ -1,18 +1,12 @@
 <script setup>
-import TechnicalStack from './TechnicalStack.vue';
-import SelectedProjects from './SelectedProjects.vue';
-import About from './About.vue';
+import TechnologyStack from "@/views/TechnologyStack.vue";
+import SkillsExpertise from "@/views/SkillsExpertise.vue";
 </script>
 
 <template>
-    <div class="home">
-        <!-- 技术栈 -->
-        <TechnicalStack/>
-        <div style="height: 3%;"></div>
-        <!-- 项目 -->
-        <SelectedProjects/>
-        <div style="height: 3%;"></div>
-        <!-- 关于我 -->
-        <!-- <About/> -->
+    <div class="m-10">
+      <technology-stack />
+      <div class="h-10"></div>
+      <skills-expertise />
     </div>
 </template>
