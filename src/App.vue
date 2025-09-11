@@ -12,7 +12,7 @@ const ga = env.VITE_GA;
   <div class="min-h-screen flex flex-col">
     <HomeView />
 
-    <footer class="footer footer-center p-3">
+    <footer class="min-w-60 footer footer-center p-3">
       <aside>
         <div>
           <!-- 网站信息 -->

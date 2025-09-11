@@ -52,7 +52,7 @@ const technology = [
 <template>
   <div>
     <ul
-      class="list min-w-50 bg-base-100 rounded-lg shadow-md duration-200 hover:shadow-lg hover:scale-101 p-4 sm:p-5 md:p-6 ">
+      class="list min-w-50 bg-base-100 rounded-lg shadow-sm duration-200 hover:shadow-lg hover:scale-101 active:shadow-lg active:scale-101 p-4 sm:p-5 md:p-6 ">
       <li class="list-title">
         <font-awesome-icon :icon="['fas', 'code']" class="text-blue-500 mr-2 text-lg"/>
         <span class="text-lg">技术专长</span>
@@ -61,9 +61,9 @@ const technology = [
         <div class="flex items-center group">
           <div class="flex items-center">
             <font-awesome-icon :icon="item.icon" :class="item.iconColor"/>
-            <span class="ml-2 group-hover:text-blue-600">{{ item.name }}</span>
+            <span class="ml-2 group-hover:text-blue-600 group-active:text-blue-600">{{ item.name }}</span>
           </div>
-          <span class="ml-auto text-gray-500 group-hover:text-blue-600">{{ item.percent }}%</span>
+          <span class="ml-auto text-gray-500 group-hover:text-blue-600 group-active:text-blue-600">{{ item.percent }}%</span>
         </div>
         <progress class="progress text-blue-500 w-full mt-2" :value="item.percent" max="100"/>
       </li>
