@@ -65,7 +65,9 @@ const technology = [
           </div>
           <span class="ml-auto text-gray-500 group-hover:text-blue-600 group-active:text-blue-600">{{ item.percent }}%</span>
         </div>
-        <progress class="progress text-blue-500 w-full mt-2" :value="item.percent" max="100"/>
+        <div class="mt-2 h-2 rounded-full bg-gray-200">
+          <div class="h-2 rounded-full bg-blue-500" :style="{ width: item.percent + '%' }"></div>
+        </div>
       </li>
     </ul>
   </div>

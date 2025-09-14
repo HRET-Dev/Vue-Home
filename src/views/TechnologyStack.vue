@@ -33,7 +33,7 @@ const techStackList = [
 
 <template>
   <div
-    class="min-w-50 bg-base-100 rounded-lg shadow-sm duration-200 hover:shadow-lg hover:scale-101 p-4 sm:p-5 md:p-6">
+    class="min-w-50 rounded-lg shadow-sm duration-200 hover:shadow-lg hover:scale-101 p-4 sm:p-5 md:p-6">
     <div>
       <font-awesome-icon :icon="['fas', 'code']" class="text-blue-500 mr-2 text-lg"/>
       <span class="text-lg">技术栈</span>
