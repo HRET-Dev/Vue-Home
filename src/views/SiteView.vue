@@ -1,78 +1,87 @@
 <script setup>
+import {ref} from "vue";
 import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
 
-// 网站列表
-const siteList = [
-  {
-    name: "Hexo 博客",
-    url: "https://blog.hret.cn",
-    icon: "https://storage.hret.cn/blog/hret-logo.jpg",
-    bgColor: "hover:bg-blue-500",
-    textColor: "hover:text-white",
-  },
-  {
-    name: "Halo 博客",
-    url: "https://www.hret.dev",
-    icon: "https://www.hret.dev/upload/hret-blog-logo.jpg",
-    bgColor: "hover:bg-blue-500",
-    textColor: "hover:text-white",
-  },
-  {
-    name: "Alist 云盘",
-    url: "https://alist.hret.dev",
-    icon: "https://alist.hret.dev/favicon.ico",
-    bgColor: "hover:bg-blue-500",
-    textColor: "hover:text-white",
-  },
-  {
-    name: "临时域名邮箱",
-    url: "https://email.hret.loc.cc",
-    icon: "https://email.hret.loc.cc/logo.png",
-    bgColor: "hover:bg-blue-500",
-    textColor: "hover:text-white",
-  },
-  {
-    name: "Komari 服务器探针",
-    url: "https://komari.hret.pp.ua",
-    icon: "https://komari.hret.pp.ua/favicon.ico",
-    bgColor: "hover:bg-blue-500",
-    textColor: "hover:text-white",
-  },
-]
+// 加载本地 JSON 文件
+import siteConfig from '@/config/site.json';
+// 处理站点数据
+const siteList = siteConfig.map(item => ({
+  name: item.name,
+  url: item.url,
+  icon: item.icon,
+  iframe: item.iframe
+}));
+
+// 当前选中的站点 URL
+let url = ref('');
+
+// 网站点击事件
+function openSiteDialog(selectedUrl) {
+  url.value = selectedUrl;
+  const dialog = document.getElementById('site-dialog');
+  dialog.showModal();
+
+  const closeButton = dialog.querySelector('button');
+  closeButton.addEventListener('click', () => {
+    dialog.close();
+  });
+}
 </script>
 
 <template>
-  <div
-    class="min-w-50 rounded-lg shadow-sm duration-200 hover:shadow-lg hover:scale-101 p-2 sm:p-4">
-    <div>
-      <font-awesome-icon :icon="['fas', 'globe']" class="text-blue-500 mr-2 text-lg"/>
-      <span class="text-lg">个人网站</span>
-    </div>
-    <div class="flex flex-wrap">
-      <a v-for="item in siteList" :key="item.name" :href="item.url" target="_blank" class="m-auto">
-        <div
-          class="text-center border border-gray-100 rounded-lg p-4 m-2 duration-200 hover:scale-105"
-          :class="[item.bgColor, item.textColor]"
-        >
-          <h3>
-            <img
-              v-if="item.icon != null"
-              class="m-auto w-12 rounded-lg mb-2"
-              :src="item.icon"
-              :alt="item.name"
-              @error="e => e.target.src = '/favicon.ico'"
-            />
-            <img
-              v-else
-              class="m-auto w-12 mb-2"
-              src="/favicon.ico"
-              :alt="item.name"
-            />
-            <i>{{ item.name }}</i>
-          </h3>
-        </div>
+  <div class="grid grid-cols-3">
+    <!-- 网站列表 -->
+    <div v-for="site in siteList" :key="site.name" class="border m-2 rounded-lg text-center hover:shadow-lg hover:scale-105 duration-200">
+      <p
+        v-if="site.iframe"
+        class="p-6 cursor-pointer"
+        @click.prevent="openSiteDialog(site.url)"
+      >
+        <FontAwesomeIcon :icon="site.icon" />
+        {{ site.name }}
+      </p>
+      <a
+        v-else
+        :href="site.url"
+        target="_blank"
+        class="block p-6 cursor-pointer"
+      >
+        <FontAwesomeIcon :icon="site.icon" />
+        {{ site.name }}
       </a>
     </div>
+    <!-- 站点预览弹框 -->
+    <dialog id="site-dialog" class="m-auto p-3 rounded-lg text-center">
+      <div class="flex mb-2">
+        <h2 class="text-lg font-bold">站点预览</h2>
+        <div class="ml-auto">
+          <a :href="url" target="_blank">
+            <FontAwesomeIcon icon="up-right-from-square"/>
+          </a>
+          <span class="ml-2 mr-2">|</span>
+          <button @click="url = ''">
+            <FontAwesomeIcon icon="xmark"/>
+          </button>
+        </div>
+      </div>
+      <iframe :src="url" class=
+        "
+        rounded-lg 
+        2xl:w-300 
+        2xl:h-200
+        xl:w-250
+        xl:h-180
+        lg:w-200
+        lg:h-150
+        md:w-120
+        md:h-150
+        sm:w-80
+        sm:h-100
+        w-60
+        h-80
+        "
+      ></iframe>
+    </dialog>
   </div>
 </template>
 

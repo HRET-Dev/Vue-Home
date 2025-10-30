@@ -9,24 +9,18 @@ import {FontAwesomeIcon} from '@fortawesome/vue-fontawesome'
 
 // 导入需要使用的 fontawesome 图标
 import {
-  faCode,
-  faTerminal,
-  faGlobe
+  faUpRightFromSquare,
+  faXmark,
+  faBlog,
+  faCloud,
+  faHardDrive,
+  faEnvelope,
+  faSquarePollVertical,
 } from '@fortawesome/free-solid-svg-icons'
-
-import {
-  faJava,
-  faPython,
-  faJs,
-  faVuejs,
-  faDocker,
-  faFlutter,
-  faDartLang
-} from '@fortawesome/free-brands-svg-icons'
 
 
 // 将图标添加到 library 中
-library.add(faCode, faJava, faPython, faJs, faVuejs, faDocker, faFlutter, faTerminal, faDartLang, faGlobe)
+library.add(faUpRightFromSquare, faXmark, faBlog, faCloud, faHardDrive, faEnvelope, faSquarePollVertical)
 
 // 引入全局样式
 import './style.css'

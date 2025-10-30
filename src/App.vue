@@ -9,35 +9,51 @@ const ga = env.VITE_GA;
 </script>
 
 <template>
-  <div class="min-h-screen flex flex-col">
-    <HomeView />
+  <div class="app">
+    <div class="min-h-screen flex flex-col">
+      <HomeView />
 
-    <footer class="min-w-60 footer text-center p-3">
-      <aside>
-        <div>
-          <!-- 网站信息 -->
-          <span>© {{ siteDate }} {{ author }}</span>
+      <footer class="min-w-60 footer text-center p-3">
+        <aside>
+          <div>
+            <!-- 网站信息 -->
+            <span>© {{ siteDate }} {{ author }}</span>
 
-          <!-- ICP 备案信息 -->
-          <span v-if="icp">
-            <a href="https://beian.miit.gov.cn/#/Integrated/index" target="_blank" class="footer-link">{{ icp }}</a>
-          </span>
+            <!-- ICP 备案信息 -->
+            <span v-if="icp">
+              <a href="https://beian.miit.gov.cn/#/Integrated/index" target="_blank" class="footer-link">{{ icp }}</a>
+            </span>
 
-          <!-- 网安备案信息 -->
-          <span v-if="ga">
-            <a :href="'https://beian.mps.gov.cn/#/query/webSearch?police=' + ga" target="_blank" class="footer-link">
-              <img src="https://beian.mps.gov.cn/img/logo01.dd7ff50e.png" alt="公安图标" />
-              <span>{{ ga }}</span>
-            </a>
-          </span>
-        </div>
-      </aside>
-    </footer>
+            <!-- 网安备案信息 -->
+            <span v-if="ga">
+              <a :href="'https://beian.mps.gov.cn/#/query/webSearch?police=' + ga" target="_blank" class="footer-link">
+                <img src="https://beian.mps.gov.cn/img/logo01.dd7ff50e.png" alt="公安图标" />
+                <span>{{ ga }}</span>
+              </a>
+            </span>
+          </div>
+        </aside>
+      </footer>
+    </div>
   </div>
 </template>
 
 
 <style scoped>
+.app {
+  min-height: 100vh;
+  background: linear-gradient(-45deg, #3b82f6, #9333ea, #14b8a6, #f97316);
+  background-size: 400% 400%;
+  animation: gradientMove 15s ease infinite;
+  color: #f8fafc;
+}
+
+@keyframes gradientMove {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
 footer {
   margin-top: auto;
   margin-bottom: 0;
