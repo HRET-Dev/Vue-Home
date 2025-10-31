@@ -1,0 +1,17 @@
+[
+  {
+    "name": "Email",
+    "icon": "fas fa-envelope",
+    "url": "mailto:admin@hret.dev"
+  },
+  {
+    "name": "GitHub",
+    "icon": "fab fa-github",
+    "url": "https://github.com/HRET-Dev"
+  },
+  {
+    "name": "Telegram",
+    "icon": "fab fa-telegram",
+    "url": "https://t.me/HRET_dev"
+  }
+]

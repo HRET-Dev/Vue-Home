@@ -17,37 +17,42 @@ let url = ref('');
 
 // 网站点击事件
 function openSiteDialog(selectedUrl) {
+  // 设置 URL
   url.value = selectedUrl;
+  // 显示弹框
   const dialog = document.getElementById('site-dialog');
   dialog.showModal();
+}
 
-  const closeButton = dialog.querySelector('button');
-  closeButton.addEventListener('click', () => {
-    dialog.close();
-  });
+// 关闭站点预览弹框事件
+function closeSiteDialog() {
+  const dialog = document.getElementById('site-dialog');
+  dialog.close();
+  // 清空 URL
+  url.value = '';
 }
 </script>
 
 <template>
   <div class="grid grid-cols-3">
     <!-- 网站列表 -->
-    <div v-for="site in siteList" :key="site.name" class="border m-2 rounded-lg text-center hover:shadow-lg hover:scale-105 duration-200">
-      <p
+    <div v-for="site in siteList" :key="site.name" class="border m-2 rounded-lg hover:shadow-lg hover:scale-105 duration-200">
+      <div
         v-if="site.iframe"
-        class="p-6 cursor-pointer"
+        class="cursor-pointer text-center h-full flex flex-col justify-center items-center p-2 pt-3 pb-3 md:p-6 md:flex-row"
         @click.prevent="openSiteDialog(site.url)"
       >
-        <FontAwesomeIcon :icon="site.icon" />
-        {{ site.name }}
-      </p>
+        <FontAwesomeIcon :icon="site.icon" class="mb-1 md:mr-2" />
+        <p>{{ site.name }}</p>
+      </div>
       <a
         v-else
         :href="site.url"
         target="_blank"
-        class="block p-6 cursor-pointer"
+        class="cursor-pointer text-center h-full flex flex-col justify-center items-center p-2 pt-3 pb-3 md:p-6 md:flex-row"
       >
-        <FontAwesomeIcon :icon="site.icon" />
-        {{ site.name }}
+        <FontAwesomeIcon :icon="site.icon" class="mb-1 md:mr-2" />
+        <p>{{ site.name }}</p>
       </a>
     </div>
     <!-- 站点预览弹框 -->
@@ -59,15 +64,15 @@ function openSiteDialog(selectedUrl) {
             <FontAwesomeIcon icon="up-right-from-square"/>
           </a>
           <span class="ml-2 mr-2">|</span>
-          <button @click="url = ''">
+          <button @click="closeSiteDialog()">
             <FontAwesomeIcon icon="xmark"/>
           </button>
         </div>
       </div>
       <iframe :src="url" class=
         "
-        rounded-lg 
-        2xl:w-300 
+        rounded-lg
+        2xl:w-300
         2xl:h-200
         xl:w-250
         xl:h-180

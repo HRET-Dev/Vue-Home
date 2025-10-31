@@ -2,37 +2,37 @@
   {
     "name": "Hexo 博客",
     "url": "https://blog.hret.cn",
-    "icon": "fa-blog",
+    "icon": "fas fa-blog",
     "iframe": true
   },
   {
     "name": "Halo 博客",
     "url": "https://www.hret.dev",
-    "icon": "fa-blog",
+    "icon": "fas fa-blog",
     "iframe": false
   },
   {
     "name": "GitHub、Docker 加速站",
     "url": "https://hubproxy.hret.dev",
-    "icon": "fa-cloud",
+    "icon": "fas fa-cloud",
     "iframe": false
   },
   {
     "name": "Alist 云盘",
     "url": "https://alist.hret.dev",
-    "icon": "fa-hard-drive",
+    "icon": "fas fa-hard-drive",
     "iframe": true
   },
   {
-    "name": "临时域名邮箱",
+    "name": "域名邮箱",
     "url": "https://email.hret.cn",
-    "icon": "fa-envelope",
+    "icon": "fas fa-envelope",
     "iframe": true
   },
   {
     "name": "Komari 服务器探针",
     "url": "https://komari.hret.pp.ua",
-    "icon": "fa-square-poll-vertical",
+    "icon": "fas fa-square-poll-vertical",
     "iframe": true
   }
 ]

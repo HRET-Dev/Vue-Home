@@ -9,6 +9,11 @@ import {FontAwesomeIcon} from '@fortawesome/vue-fontawesome'
 
 // 导入需要使用的 fontawesome 图标
 import {
+  faGithub,
+  faTelegram,
+  faWeixin,
+} from '@fortawesome/free-brands-svg-icons'
+import {
   faUpRightFromSquare,
   faXmark,
   faBlog,
@@ -20,7 +25,7 @@ import {
 
 
 // 将图标添加到 library 中
-library.add(faUpRightFromSquare, faXmark, faBlog, faCloud, faHardDrive, faEnvelope, faSquarePollVertical)
+library.add(faGithub, faTelegram, faWeixin, faUpRightFromSquare, faXmark, faBlog, faCloud, faHardDrive, faEnvelope, faSquarePollVertical)
 
 // 引入全局样式
 import './style.css'
