@@ -42,7 +42,7 @@ function closeSiteDialog() {
         class="cursor-pointer text-center h-full flex flex-col justify-center items-center p-2 pt-3 pb-3 md:p-6 md:flex-row"
         @click.prevent="openSiteDialog(site.url)"
       >
-        <FontAwesomeIcon :icon="site.icon" class="mb-1 md:mr-2" />
+        <FontAwesomeIcon :icon="site.icon" class="mb-1 md:mb-0 md:mr-2" />
         <p>{{ site.name }}</p>
       </div>
       <a
@@ -51,7 +51,7 @@ function closeSiteDialog() {
         target="_blank"
         class="cursor-pointer text-center h-full flex flex-col justify-center items-center p-2 pt-3 pb-3 md:p-6 md:flex-row"
       >
-        <FontAwesomeIcon :icon="site.icon" class="mb-1 md:mr-2" />
+        <FontAwesomeIcon :icon="site.icon" class="mb-1 md:mb-0 md:mr-2" />
         <p>{{ site.name }}</p>
       </a>
     </div>

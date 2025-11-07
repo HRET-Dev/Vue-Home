@@ -21,11 +21,14 @@ import {
   faHardDrive,
   faEnvelope,
   faSquarePollVertical,
+  faChartLine,
+  faCalendarCheck,
+  faTachometerAlt,
 } from '@fortawesome/free-solid-svg-icons'
 
 
 // 将图标添加到 library 中
-library.add(faGithub, faTelegram, faWeixin, faUpRightFromSquare, faXmark, faBlog, faCloud, faHardDrive, faEnvelope, faSquarePollVertical)
+library.add(faGithub, faTelegram, faWeixin, faUpRightFromSquare, faXmark, faBlog, faCloud, faHardDrive, faEnvelope, faSquarePollVertical, faChartLine, faCalendarCheck, faTachometerAlt)
 
 // 引入全局样式
 import './style.css'

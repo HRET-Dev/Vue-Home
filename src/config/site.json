@@ -12,7 +12,7 @@
     "iframe": false
   },
   {
-    "name": "GitHub、Docker 加速站",
+    "name": "GitHub、Docker 加速",
     "url": "https://hubproxy.hret.dev",
     "icon": "fas fa-cloud",
     "iframe": false
@@ -33,6 +33,24 @@
     "name": "Komari 服务器探针",
     "url": "https://komari.hret.pp.ua",
     "icon": "fas fa-square-poll-vertical",
+    "iframe": true
+  },
+  {
+    "name": "站点监测",
+    "url": "https://status.hret.dev",
+    "icon": "fas fa-chart-line",
+    "iframe": true
+  },
+  {
+    "name": "Wallos 个人订阅追踪器",
+    "url": "https://wallos.hret.dev",
+    "icon": "fas fa-calendar-check",
+    "iframe": true
+  },
+  {
+    "name": "Frp管理面板",
+    "url": "https://frpp.hret.dev",
+    "icon": "fas fa-tachometer-alt",
     "iframe": true
   }
 ]
